@@ -26,3 +26,19 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+/* My Styles */
+
+.container {
+    float: left;
+    width: 30%;
+    background: #e0e0e0;
+}
+
+li {
+    text-align: left;
+    list-style-type:  none;
+    text-transform: capitalize;
+    line-height:  1.5em;
+    color: #423c3c;
+}
