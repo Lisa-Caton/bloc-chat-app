@@ -38,7 +38,7 @@ import MessageList from './components/MessageList.js'
             <h1 className="App-title">React Chat Room</h1>
           </header>
           <div className="container">
-            <h1>{this.state.activeRoom.title || "Select A Room"}</h1>
+            <h1>{this.state.activeRoom.title || "Block Chat"}</h1>
             <RoomList firebase={firebase} activeRoom={() => this.activeRoom()} />
             { showMessages ?
               (<MessageList firebase={firebase} activeRoom={this.state.activeRoom.key}/>)
