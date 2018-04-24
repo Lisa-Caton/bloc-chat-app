@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import * as firebase from 'firebase';
 import RoomList from './components/RoomList.js'
@@ -21,6 +20,7 @@ import MessageList from './components/MessageList.js'
     constructor(props){
       super(props);
       this.state = {activeRoom: ''};
+      this.activeRoom = this.activeRoom.bind(this);
     }
 
     activeRoom(room){
@@ -33,17 +33,23 @@ import MessageList from './components/MessageList.js'
 
       return (
         <div className="App">
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <h1 className="App-title">React Chat Room</h1>
-          </header>
           <div className="container">
-            <h1>{this.state.activeRoom.title || "Block Chat"}</h1>
-            <RoomList firebase={firebase} activeRoom={() => this.activeRoom()} />
-            { showMessages ?
-              (<MessageList firebase={firebase} activeRoom={this.state.activeRoom.key}/>)
-              : null
-            }
+            <div className="RoomList">
+            <h1>Bloc chat</h1>
+                <RoomList firebase={firebase} activeRoom={this.activeRoom} />
+            </div>
+            <div className="MessageBar">
+            <h1>
+              { showMessages ?
+                this.state.activeRoom.name
+                : null
+              }
+              </h1>
+              { showMessages ?
+                (<MessageList firebase={firebase} activeRoom={this.state.activeRoom.key}/>)
+                : null
+              }
+            </div>
           </div>
         </div>
       );

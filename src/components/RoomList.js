@@ -3,18 +3,24 @@ import React, { Component } from 'react';
 class RoomList extends Component {
   constructor(props) {
     super(props);
-    this.state = {rooms: [], newRoomName:''};
-    this.roomsRef = this.props.firebase.database().ref('rooms');
+    this.state = {
+      rooms: [],
+      name:''
+    };
+    this.roomsRef = this.props.firebase.database().ref('Rooms');
+    this.handleChange = this.handleChange.bind(this);
+    this.createRoom = this.createRoom.bind(this);
   }
 
   handleChange(e) {
-    this.setState({ newRoomName: e.target.value });
+    e.preventDefault();
+    this.setState({ name: e.target.value });
   }
 
   createRoom(e){
     e.preventDefault();
-    this.roomsRef.push({ newRoomName: this.state.newRoomName });
-    this.setState({ newRoomName: '' });
+    this.roomsRef.push({ name: this.state.name });
+    this.setState({ name: '' });
   }
 
   componentDidMount() {
@@ -32,14 +38,14 @@ class RoomList extends Component {
 
   render(){
     const roomForm = (
-      <form onSubmit = {(e) => this.createRoom(e)}>
-        <input type="text" value={this.state.newRoomName} onChange={(e) => this.handleChange(e)}/>
+      <form onSubmit = {this.createRoom}>
+        <input type="text" value={this.state.name} placeholder="Enter Room Name" onChange={this.handleChange}/>
         <input type="submit" value="New Room"/>
       </form>
     );
 
     const roomList = this.state.rooms.map((room) =>
-      <li key={room.key} placeholder="Enter Room Name" onClick={(e) => this.selectRoom(room, e)}>{ room.name }</li>
+      <li key={room.key} onClick={(e) => this.selectRoom(room, e)}>{ room.name }</li>
     );
 
 
