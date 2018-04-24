@@ -17,6 +17,7 @@ class MessageList extends Component {
   }
 
   handleChange(e) {
+    e.preventDefault();
     this.setState({
       username: 'user',
       content: e.target.value,
@@ -26,6 +27,7 @@ class MessageList extends Component {
   }
 
   createMessage(e){
+    e.preventDefault();
     this.messagesRef.push({
       username: this.state.username,
       content: this.state.content,
