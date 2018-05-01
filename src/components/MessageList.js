@@ -13,7 +13,16 @@ class MessageList extends Component {
     this.messagesRef = this.props.firebase.database().ref('messages');
     this.handleChange = this.handleChange.bind(this);
     this.createMessage = this.createMessage.bind(this);
+  }
 
+  componentDidMount() {
+    this.messagesRef.on('child_added', snapshot => {
+      const message = snapshot.val();
+      message.key = snapshot.key;
+      this.setState({ 
+        messages: this.state.messages.concat(message)
+      });
+    });
   }
 
   handleChange(e) {
@@ -29,21 +38,19 @@ class MessageList extends Component {
   createMessage(e){
     e.preventDefault();
     this.messagesRef.push({
-      username: this.state.username,
       content: this.state.content,
+      roomId: this.state.roomId,
       sentAt: this.state.sentAt,
-      roomId: this.state.roomId
+      username: this.state.username
     });
-    this.setState({username: "", content: "", sentAt: "", roomId: "" });
+    this.setState({
+      content: "", 
+      roomId: "",
+      sentAt: "",
+      username: ""
+    });
   }
 
-  componentDidMount() {
-    this.messagesRef.on('child_added', snapshot => {
-      const message = snapshot.val();
-      message.key = snapshot.key;
-      this.setState({ messages: this.state.messages.concat(message) });
-    });
-  }
 
 
   render(){
