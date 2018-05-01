@@ -29,28 +29,35 @@
 
 /* My Styles */
 
-  html {background-color: peachpuff;}
+  header.header h1 {
+    background-color: #B9AEB9;
+    color: #383838;
+    font-size: 4em;
+    margin: 0;
+    padding: 20px 0;
+    text-shadow: -11px 12px 8px rgba(159, 152, 152, 0.75);
+  }
 
-  h1 {
+  h2 {
     color: #474747;
-    text-shadow: -11px 12px 8px rgba(159, 152, 152, 0.48);
+    text-shadow: -11px 12px 8px rgba(159, 152, 152, 0.38);
     padding-bottom: 10px;
   }
 
   .container {padding: 10px 100px;}
 
-  .RoomList, .MessageBar {float: left;}
+  .RoomList, .MessageBar {
+    float: left; 
+    height: 500px;
+  }
 
   .RoomList {
     background: #e0e0e0;
-    margin-top: 50px;
     width: 30%;
   }
 
   .MessageBar {
     background: #f7f7f7;
-    min-height: 310px;
-    margin-top: 50px;
     width: 70%;
   }
 
