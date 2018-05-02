@@ -29,7 +29,7 @@ import User from './components/User.js'
     }
 
     setUser(user){
-      this.setState({user: ''});
+      this.setState({user: user});
     }
 
     activeRoom(room){
