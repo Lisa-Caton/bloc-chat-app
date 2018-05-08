@@ -4,6 +4,8 @@ import * as firebase from 'firebase';
 import RoomList from './components/RoomList.js'
 import MessageList from './components/MessageList.js'
 import User from './components/User.js'
+import RoomParticipants from './components/RoomParticipants.js'
+
 
   // Initialize Firebase
   var config = {
@@ -24,20 +26,16 @@ import User from './components/User.js'
         activeRoom: '',
         user:''
       };
-      this.activeRoom = this.activeRoom.bind(this);
-      this.setUser = this.setUser.bind(this);
     }
 
-    setUser(user){
-      this.setState({user: user});
-    }
+  activeRoom(room){
+    this.setState({activeRoom: room});
+  }
 
-    activeRoom(room){
-      this.setState({activeRoom: room});
-    }
-
-
-
+  setUser(user){
+    console.log(user);
+    this.setState({user: user});
+  }
 
     render() {
       const showMessages = this.state.activeRoom;
@@ -46,11 +44,11 @@ import User from './components/User.js'
         <div className="App">
           <div className="container">
             <header className="header">
-              <h1><User firebase={firebase} setUser={this.setUser} user={this.state.user}/></h1>
+              <h1><User firebase={firebase} setUser={this.setUser.bind(this)} user={this.state.user} /></h1>
             </header>
             <div className="RoomList">
               <h2>Bloc chat</h2>
-              <RoomList firebase={firebase} activeRoom={this.activeRoom} />
+              <RoomList firebase={firebase} activeRoom={this.activeRoom.bind(this)} user={this.state.user} />
             </div>
             <div className="MessageBar">
               <h2>
@@ -60,7 +58,7 @@ import User from './components/User.js'
                 }
               </h2>
               { showMessages ?
-                (<MessageList firebase={firebase} activeRoom={this.state.activeRoom.key}/>)
+                (<MessageList firebase={firebase} activeRoom={this.state.activeRoom.key} user={this.state.user} />)
                 : null
               }
             </div>

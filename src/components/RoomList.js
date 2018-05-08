@@ -37,11 +37,10 @@ class RoomList extends Component {
     this.props.activeRoom(room);
   }
 
-
   render(){
     const roomForm = (
       <form onSubmit = {this.createRoom}>
-        <input type="text" value={this.state.name} placeholder="Enter Room Name" onChange={this.handleChange}/>
+        <input type="text" name="name" value={this.state.name} placeholder="Enter Room Name" onChange={this.handleChange}/>
         <input type="submit" value="New Room"/>
       </form>
     );

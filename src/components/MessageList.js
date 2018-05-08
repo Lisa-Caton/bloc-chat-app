@@ -11,8 +11,6 @@ class MessageList extends Component {
       messages: []
     };
     this.messagesRef = this.props.firebase.database().ref('messages');
-    this.handleChange = this.handleChange.bind(this);
-    this.createMessage = this.createMessage.bind(this);
   }
 
   componentDidMount() {
@@ -28,7 +26,7 @@ class MessageList extends Component {
   handleChange(e) {
     e.preventDefault();
     this.setState({
-      username: 'user',
+      username: this.props.user.displayName,
       content: e.target.value,
       sentAt: this.props.firebase.database.ServerValue.TIMESTAMP,
       roomId: this.props.activeRoom
@@ -38,35 +36,33 @@ class MessageList extends Component {
   createMessage(e){
     e.preventDefault();
     this.messagesRef.push({
+      username: this.state.username,
       content: this.state.content,
       roomId: this.state.roomId,
       sentAt: this.state.sentAt,
-      username: this.state.username
     });
     this.setState({
-      content: "", 
-      roomId: "",
-      sentAt: "",
-      username: ""
+      username:'',
+      content: '',
+      roomId: '',
+      sentAt: '',
     });
   }
-
-
 
   render(){
     const activeRoom = this.props.activeRoom;
 
     const messageBar = (
-      <form onSubmit= {this.createMessage}>
-        <input type="text" value={this.state.content} placeholder="Enter Message" onChange={this.handleChange} />
+      <form onSubmit= {this.createMessage.bind(this)}>
+        <input type="text" value={this.state.content} placeholder="Enter Message" onChange={this.handleChange.bind(this)} />
         <input type="submit" value="Send" />
       </form>
       );
 
     const messageList = (
-      this.state.messages.map((message) => {
-        if (message.roomId === activeRoom) {
-          return <li key={message.key}>{message.content}</li>
+      this.state.messages.map((messages) => {
+        if (messages.roomId === activeRoom) {
+          return <li key={messages.key}>{messages.username}: {messages.content}</li>
         }
         return null;
       })
