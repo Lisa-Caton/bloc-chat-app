@@ -4,7 +4,6 @@ import * as firebase from 'firebase';
 import RoomList from './components/RoomList.js'
 import MessageList from './components/MessageList.js'
 import User from './components/User.js'
-import RoomParticipants from './components/RoomParticipants.js'
 
 
   // Initialize Firebase
@@ -23,8 +22,8 @@ import RoomParticipants from './components/RoomParticipants.js'
     constructor(props){
       super(props);
       this.state = {
-        activeRoom: '',
-        user:''
+        activeRoom: null,
+        user: null
       };
     }
 
@@ -33,34 +32,53 @@ import RoomParticipants from './components/RoomParticipants.js'
   }
 
   setUser(user){
-    console.log(user);
     this.setState({user: user});
   }
 
     render() {
-      const showMessages = this.state.activeRoom;
+      const showRoom = this.state.activeRoom;
 
       return (
         <div className="App">
           <div className="container">
             <header className="header">
-              <h1><User firebase={firebase} setUser={this.setUser.bind(this)} user={this.state.user} /></h1>
+              <h1>
+
+              <User 
+                firebase={firebase} 
+                setUser={this.setUser.bind(this)}
+                user={this.state.user} 
+              />
+
+              </h1>
             </header>
+
             <div className="RoomList">
               <h2>Bloc chat</h2>
-              <RoomList firebase={firebase} activeRoom={this.activeRoom.bind(this)} user={this.state.user} />
+
+              <RoomList 
+                firebase={firebase} 
+                activeRoom={this.activeRoom.bind(this)} 
+                user={this.state.user}
+              />
             </div>
+
             <div className="MessageBar">
               <h2>
-                { showMessages ?
+                { showRoom ?
                   this.state.activeRoom.name
                   : null
                 }
               </h2>
-              { showMessages ?
-                (<MessageList firebase={firebase} activeRoom={this.state.activeRoom.key} user={this.state.user} />)
+              { showRoom ?
+
+                (<MessageList 
+                  firebase={firebase} 
+                  activeRoom={this.state.activeRoom.key} 
+                  user={this.state.user} />)
                 : null
               }
+
             </div>
           </div>
         </div>
